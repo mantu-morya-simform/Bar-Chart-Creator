@@ -21,7 +21,7 @@ const Main = ({ items }: { items: ItemDataType[] }) => {
         textAlign="center"
         color="black"
       >
-        Skill Bar Chart
+        Bar Chart
       </Text>
 
       <Flex
