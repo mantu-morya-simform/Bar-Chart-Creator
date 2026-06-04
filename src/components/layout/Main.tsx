@@ -1,13 +1,26 @@
 import { Box, Flex, Text, VStack } from "@chakra-ui/react";
 import type { ItemDataType } from "../../App";
+import { useMemo } from "react";
 
 const Main = ({ items }: { items: ItemDataType[] }) => {
+  const maxValue = useMemo(() => {
+    return Math.max(...items.map((item) => Number(item.value)));
+  }, [items]);
+
+  const sliceValue = maxValue / 10;
+
+  const arr: number[] = [];
+
+  for (let i = 0; i <= 10; i++) {
+    arr[i] = sliceValue * i;
+  }
+
   return (
     <Box
       w="100%"
       h="100%"
       p="10"
-      bg="gray.100"
+      // bg="gray.100"
       color="white"
       display="flex"
       flexDirection="column"
@@ -44,52 +57,17 @@ const Main = ({ items }: { items: ItemDataType[] }) => {
           position="absolute"
           left="5"
         >
-          <Text
-            fontSize="sm"
-            fontWeight="bold"
-            color="black"
-            position="absolute"
-            bottom={`${10 * 5}px`}
-          >
-            10%
-          </Text>
-          <Text
-            fontSize="sm"
-            fontWeight="bold"
-            color="black"
-            position="absolute"
-            bottom={`${30 * 5}px`}
-          >
-            30%
-          </Text>
-          <Text
-            fontSize="sm"
-            fontWeight="bold"
-            color="black"
-            position="absolute"
-            bottom={`${50 * 5}px`}
-          >
-            50%
-          </Text>
-          <Text
-            fontSize="sm"
-            fontWeight="bold"
-            color="black"
-            position="absolute"
-            bottom={`${70 * 5}px`}
-          >
-            70%
-          </Text>
-
-          <Text
-            fontSize="sm"
-            fontWeight="bold"
-            color="black"
-            position="absolute"
-            bottom={`${100 * 5}px`}
-          >
-            100%
-          </Text>
+          {arr.map((currentValue) => (
+            <Text
+              fontSize="sm"
+              fontWeight="bold"
+              color="black"
+              position="absolute"
+              bottom={`${(currentValue / maxValue) * 500}px`}
+            >
+              {items.length && currentValue}
+            </Text>
+          ))}
         </VStack>
 
         {items.map((item) => (
@@ -100,7 +78,7 @@ const Main = ({ items }: { items: ItemDataType[] }) => {
 
             <Box
               w="100%"
-              h={`${Number(item.value) * 5}px`}
+              h={`${(Number(item.value) / maxValue) * 500}px`}
               bg="blue.600"
               borderRadius="md md 0 0"
               transition="0.3s"
