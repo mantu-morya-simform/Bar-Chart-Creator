@@ -12,26 +12,39 @@ export type ItemDataType = {
 
 function App() {
   const [items, setItems] = useState<ItemDataType[]>([]);
+
   return (
-    <Flex direction="column" h="100vh" overflow="hidden">
-      <NavBar />
+    <Flex direction="column" h="100dvh" overflow="hidden">
+      {/* Fixed Navbar */}
+      <Box flexShrink={0}>
+        <NavBar />
+      </Box>
+
+      {/* Body */}
       <Flex
         flex="1"
         direction={{ base: "column", md: "row" }}
         overflow="hidden"
       >
-        {/* sidebar */}
+        {/* Sidebar - Scrollable */}
         <Box
-          w={{ base: "100%", md: "450px" }}
+          w={{ base: "100%", md: "280px", lg: "320px" }}
           borderRight={{ md: "1px solid" }}
+          borderBottom={{ base: "1px solid", md: "none" }}
+          p={{ base: 3, md: 4, lg: 5 }}
           overflowY="auto"
-          p={5}
+          flexShrink={0}
         >
           <SideBar items={items} setItems={setItems} />
         </Box>
 
-        {/* main content */}
-        <Box flex="1" overflowY="auto" p={5}>
+        {/* Main Chart Area - Fixed */}
+        <Box
+          flex="1"
+          p={{ base: 3, md: 4, lg: 6 }}
+          overflow="hidden"
+          display="flex"
+        >
           <Main items={items} />
         </Box>
       </Flex>

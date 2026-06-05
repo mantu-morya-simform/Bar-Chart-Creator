@@ -1,49 +1,69 @@
-import { DataList, Text } from "@chakra-ui/react";
+import { Box, DataList, Text } from "@chakra-ui/react";
 import type { ItemDataType } from "../../App";
 
 const AddedData = ({ items }: { items: ItemDataType[] }) => {
   return (
-    <DataList.Root
-      orientation="horizontal"
-      maxW="md"
-      p={10}
-      shadow="xl"
-      h="400px"
-      overflowY="overlay"
+    <Box
+      w="full"
+      h="full"
+      p={{ base: 3, md: 4 }}
+      shadow="md"
+      borderRadius="md"
+      overflow="hidden"
     >
-      <Text alignSelf="center" fontSize="lg" fontWeight="bold">
+      {/* Title */}
+      <Text
+        textAlign="center"
+        fontSize={{ base: "md", md: "lg" }}
+        fontWeight="bold"
+        mb={4}
+      >
         Chart Data
       </Text>
-      <DataList.Item key={"label"} py="4">
-        <DataList.ItemLabel flex="2" fontSize="sm" fontWeight="bold">
-          {"Label"}
-        </DataList.ItemLabel>
 
-        <DataList.ItemValue
-          flex="1"
-          textAlign="center"
-          fontSize="sm"
-          fontWeight="bold"
-        >
-          {"Value"}
-        </DataList.ItemValue>
-      </DataList.Item>
-      {items.map((item) => (
-        <DataList.Item key={item.id} py="4">
-          <DataList.ItemLabel flex="2">{item.label}</DataList.ItemLabel>
+      {/* Data List */}
+      <DataList.Root
+        orientation="horizontal"
+        w="full"
+        maxH={{ base: "200px", md: "300px", lg: "400px" }}
+        overflowY="auto"
+      >
+        {/* Header */}
+        <DataList.Item py={2}>
+          <DataList.ItemLabel flex="2" fontSize="sm" fontWeight="bold">
+            Label
+          </DataList.ItemLabel>
 
           <DataList.ItemValue
             flex="1"
             textAlign="center"
-            color="green"
             fontSize="sm"
             fontWeight="bold"
           >
-            {item.value}
+            Value
           </DataList.ItemValue>
         </DataList.Item>
-      ))}
-    </DataList.Root>
+
+        {/* Items */}
+        {items.map((item) => (
+          <DataList.Item key={item.id} py={2}>
+            <DataList.ItemLabel flex="2" fontSize="sm">
+              {item.label}
+            </DataList.ItemLabel>
+
+            <DataList.ItemValue
+              flex="1"
+              textAlign="center"
+              color="green.500"
+              fontSize="sm"
+              fontWeight="bold"
+            >
+              {item.value}
+            </DataList.ItemValue>
+          </DataList.Item>
+        ))}
+      </DataList.Root>
+    </Box>
   );
 };
 

@@ -1,4 +1,4 @@
-import { Button, Field, HStack, Input } from "@chakra-ui/react";
+import { Button, Field, Flex, Input, Stack } from "@chakra-ui/react";
 import type { ItemDataType } from "../../App";
 import { useRef, type Dispatch, type SetStateAction } from "react";
 
@@ -26,10 +26,7 @@ const AddData = ({ items, setItems }: SideBarPropType) => {
       return;
     }
 
-    setItems((prev) => [
-      ...prev,
-      { id: crypto.randomUUID(), label: label, value: value },
-    ]);
+    setItems((prev) => [...prev, { id: crypto.randomUUID(), label, value }]);
 
     if (labelRef.current) labelRef.current.value = "";
     if (valueRef.current) valueRef.current.value = "";
@@ -40,49 +37,56 @@ const AddData = ({ items, setItems }: SideBarPropType) => {
   }
 
   return (
-    <HStack gap="5" w="full" p={5} shadow="xl" flexWrap="wrap" align="end">
-      <Field.Root required>
-        <Field.Label>
-          X-Axis Label <Field.RequiredIndicator />
-        </Field.Label>
-        <Input
-          type="text"
-          placeholder="e.g. january"
-          variant="subtle"
-          ref={labelRef}
-        />
-      </Field.Root>
-      <Field.Root required>
-        <Field.Label>
-          Y-Axis Value <Field.RequiredIndicator />
-        </Field.Label>
-        <Input
-          type="number"
-          placeholder="e.g. 85"
+    <Stack w="full" p={{ base: 3, md: 5 }} shadow="md" borderRadius="md">
+      {/* Inputs */}
+      <Stack direction={{ base: "column", md: "row" }}>
+        <Field.Root flex="1" required>
+          <Field.Label>
+            X-Axis Label <Field.RequiredIndicator />
+          </Field.Label>
+          <Input
+            type="text"
+            placeholder="e.g. January"
+            variant="outline"
+            ref={labelRef}
+          />
+        </Field.Root>
+
+        <Field.Root flex="1" required>
+          <Field.Label>
+            Y-Axis Value <Field.RequiredIndicator />
+          </Field.Label>
+          <Input
+            type="number"
+            placeholder="e.g. 85"
+            variant="outline"
+            ref={valueRef}
+          />
+        </Field.Root>
+      </Stack>
+
+      {/* Buttons */}
+      <Flex justifyContent="space-between" gap={4}>
+        <Button
+          flex={1}
+          w={{ md: "auto" }}
+          onClick={handleSubmitClick}
+          bg="blue.500"
+        >
+          Submit
+        </Button>
+
+        <Button
+          flex={1}
+          w={{ md: "auto" }}
+          onClick={handleClearClick}
+          bg="orange.500"
           variant="outline"
-          ref={valueRef}
-        />
-      </Field.Root>
-
-      <Button
-        type="submit"
-        alignSelf="end"
-        w="full"
-        onClick={handleSubmitClick}
-      >
-        Submit
-      </Button>
-
-      <Button
-        type="submit"
-        alignSelf="end"
-        colorPalette="red"
-        w="full"
-        onClick={handleClearClick}
-      >
-        Clear All
-      </Button>
-    </HStack>
+        >
+          Clear All
+        </Button>
+      </Flex>
+    </Stack>
   );
 };
 
