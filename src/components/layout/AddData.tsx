@@ -15,6 +15,11 @@ const AddData = ({ items, setItems }: SideBarPropType) => {
     const label = labelRef.current?.value;
     const value = valueRef.current?.value;
 
+    if (Number(value) < 1) {
+      alert("Please Provide value grater then 1");
+      return;
+    }
+
     if (!label || !value) {
       alert("Please Provide Valid data To Add into Chart");
       return;

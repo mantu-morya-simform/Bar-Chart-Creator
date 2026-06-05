@@ -13,8 +13,10 @@ const Main = ({ items }: { items: ItemDataType[] }) => {
   }, [items]);
 
   const sliceValue = maxValue / 10;
-  const arr: number[] = Array.from({ length: 11 }, (_, i) => sliceValue * i);
-
+  // const sliceValue = Number((maxValue / 10).toFixed(2));
+  const arr = Array.from({ length: 11 }, (_, i) =>
+    Number((i * sliceValue).toFixed(1)),
+  );
   return (
     <Box
       w="100%"
