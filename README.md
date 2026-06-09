@@ -1,75 +1,45 @@
-# React + TypeScript + Vite
+# Bar Chart Creator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A small React + Vite app to create and preview simple bar charts.
 
-Currently, two official plugins are available:
+Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Add chart data (label + numeric value) from the sidebar.
+- Edit existing rows inline via an Edit action (prompt-based currently).
+- Clear all data with the `Clear All` button.
+- Data persists across browser refresh using `localStorage` (key: `bar_chart_items_v1`).
+- Responsive chart rendering with Chakra UI styling and a simple color palette.
 
-## React Compiler
+Quick start
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+Prerequisites: Node.js (16+ recommended)
 
-Note: This will impact Vite dev & build performances.
+Install and run the dev server:
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Build for production:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build
 ```
+
+Notes
+
+- The main state lives in `src/App.tsx` and is persisted to `localStorage`.
+- Sidebar components: `src/components/layout/AddData.tsx`, `AddedData.tsx`, `SideBar.tsx`.
+- Chart rendering: `src/components/layout/Main.tsx`.
+- Colors: `src/data/colorsData.ts`.
+- To reset stored data manually remove the `bar_chart_items_v1` key from browser `localStorage` or use the `Clear All` button.
+
+Possible improvements
+
+- Replace `prompt`-based editing with inline input controls for a better UX.
+- Add delete per-row and confirmation dialogs.
+
+License
+
+- MIT (or choose your preferred license)
