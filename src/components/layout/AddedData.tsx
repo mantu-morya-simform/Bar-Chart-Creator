@@ -1,7 +1,47 @@
-import { Box, DataList, Text } from "@chakra-ui/react";
+import { Box, DataList, Text, Button } from "@chakra-ui/react";
 import type { ItemDataType } from "../../App";
+import type { Dispatch, SetStateAction } from "react";
 
-const AddedData = ({ items }: { items: ItemDataType[] }) => {
+const AddedData = ({
+  items,
+  setItems,
+}: {
+  items: ItemDataType[];
+  setItems: Dispatch<SetStateAction<ItemDataType[]>>;
+}) => {
+  function handleEdit(item: ItemDataType) {
+    const newLabel = prompt("Edit label:", item.label);
+    if (newLabel === null) return; // user cancelled
+
+    const newValue = prompt("Edit value:", item.value);
+    if (newValue === null) return;
+
+    if (!newLabel || !newValue) {
+      alert("Please provide valid label and value.");
+      return;
+    }
+
+    if (Number(newValue) < 1) {
+      alert("Please provide a value greater than 0.");
+      return;
+    }
+
+    const duplicate = items.some(
+      (it) => it.label === newLabel && it.id !== item.id,
+    );
+
+    if (duplicate) {
+      alert("Duplicate label not allowed");
+      return;
+    }
+
+    setItems((prev) =>
+      prev.map((it) =>
+        it.id === item.id ? { ...it, label: newLabel, value: newValue } : it,
+      ),
+    );
+  }
+
   return (
     <Box
       w="full"
@@ -26,11 +66,11 @@ const AddedData = ({ items }: { items: ItemDataType[] }) => {
         orientation="horizontal"
         w="full"
         maxH={{ base: "200px", md: "300px", lg: "400px" }}
-        overflowY="auto"
+        // overflowY="auto"
       >
         {/* Header */}
         <DataList.Item py={2}>
-          <DataList.ItemLabel flex="2" fontSize="sm" fontWeight="bold">
+          <DataList.ItemLabel flex="1" fontSize="sm" fontWeight="bold">
             Label
           </DataList.ItemLabel>
 
@@ -42,12 +82,26 @@ const AddedData = ({ items }: { items: ItemDataType[] }) => {
           >
             Value
           </DataList.ItemValue>
+
+          <DataList.ItemValue
+            flex="1"
+            textAlign="center"
+            fontSize="sm"
+            fontWeight="bold"
+          >
+            Action
+          </DataList.ItemValue>
         </DataList.Item>
 
         {/* Items */}
         {items.map((item) => (
-          <DataList.Item key={item.id} py={2}>
-            <DataList.ItemLabel flex="2" fontSize="sm">
+          <DataList.Item
+            key={item.id}
+            py={2}
+            borderBottom="1px solid gray"
+            pb={5}
+          >
+            <DataList.ItemLabel flex="1" fontSize="sm">
               {item.label}
             </DataList.ItemLabel>
 
@@ -59,6 +113,12 @@ const AddedData = ({ items }: { items: ItemDataType[] }) => {
               fontWeight="bold"
             >
               {item.value}
+            </DataList.ItemValue>
+
+            <DataList.ItemValue flex="1" textAlign="right">
+              <Button size="sm" onClick={() => handleEdit(item)}>
+                Edit
+              </Button>
             </DataList.ItemValue>
           </DataList.Item>
         ))}

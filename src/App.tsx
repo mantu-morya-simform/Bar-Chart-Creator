@@ -2,7 +2,7 @@ import { Flex, Box } from "@chakra-ui/react";
 import Main from "./components/layout/Main";
 import NavBar from "./components/layout/NavBar";
 import SideBar from "./components/layout/SideBar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export type ItemDataType = {
   id: string;
@@ -11,7 +11,20 @@ export type ItemDataType = {
 };
 
 function App() {
-  const [items, setItems] = useState<ItemDataType[]>([]);
+  const STORAGE_KEY = "bar_chart_items_v1";
+
+  const [items, setItems] = useState<ItemDataType[]>(() => {
+    const data = localStorage.getItem(STORAGE_KEY);
+    if (data) {
+      const parsedData: ItemDataType[] = JSON.parse(data);
+      if (Array.isArray(parsedData)) return parsedData;
+    }
+  });
+
+  // persist data into localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+  }, [items]);
 
   return (
     <Flex direction="column" h="100dvh" overflow="hidden">

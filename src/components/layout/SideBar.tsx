@@ -18,7 +18,7 @@ const SideBar = ({ items, setItems }: SideBarPropType) => {
       overflowY="auto"
     >
       <AddData items={items} setItems={setItems} />
-      <AddedData items={items} />
+      <AddedData items={items} setItems={setItems} />
     </Flex>
   );
 };
