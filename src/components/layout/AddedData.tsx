@@ -48,10 +48,10 @@ const AddedData = ({
     <Box
       w="full"
       h="full"
-      p={{ base: 3, md: 4 }}
+      p={{ base: 12, md: 4 }}
       shadow="md"
       borderRadius="md"
-      overflow="hidden"
+      overflow="auto"
     >
       {/* Title */}
       <Text

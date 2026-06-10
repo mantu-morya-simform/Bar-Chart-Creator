@@ -79,6 +79,7 @@ const Main = ({ items }: { items: ItemDataType[] }) => {
             justify="end"
             maxW={["50px", "80px", "120px"]}
             gap={["1", "2", "3"]}
+            ml="25px"
           >
             {/* Value label — hidden on mobile */}
             <Text
@@ -93,7 +94,7 @@ const Main = ({ items }: { items: ItemDataType[] }) => {
             <Box
               w="100%"
               h={`${(Number(item.value) / maxValue) * maxBarHeight}px`}
-              bg={colors[index % colors.length]}
+              bg={colors[index % colors.length].split(".")[0]}
               borderRadius="md md 0 0"
               transition="height 0.3s"
               _hover={{
