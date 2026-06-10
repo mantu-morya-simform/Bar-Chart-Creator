@@ -29,7 +29,7 @@ const AddedData = ({ items }: { items: ItemDataType[] }) => {
         </DataList.ItemValue>
       </DataList.Item>
       {items.map((item) => (
-        <DataList.Item key={item.label} py="4">
+        <DataList.Item key={item.id} py="4">
           <DataList.ItemLabel flex="2">{item.label}</DataList.ItemLabel>
 
           <DataList.ItemValue

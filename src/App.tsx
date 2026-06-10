@@ -2,25 +2,19 @@ import { Flex, Box } from "@chakra-ui/react";
 import Main from "./components/layout/Main";
 import NavBar from "./components/layout/NavBar";
 import SideBar from "./components/layout/SideBar";
+import { useState } from "react";
 
 export type ItemDataType = {
+  id: string;
   label: string;
   value: string;
 };
 
-const items: ItemDataType[] = [
-  { label: "React", value: "80" },
-  { label: "Node", value: "77" },
-  { label: "Python", value: "55" },
-  { label: "Java", value: "68" },
-  { label: "C++", value: "49" },
-];
-
 function App() {
+  const [items, setItems] = useState<ItemDataType[]>([]);
   return (
     <Flex direction="column" h="100vh" overflow="hidden">
       <NavBar />
-
       <Flex
         flex="1"
         direction={{ base: "column", md: "row" }}
@@ -33,7 +27,7 @@ function App() {
           overflowY="auto"
           p={5}
         >
-          <SideBar items={items} />
+          <SideBar items={items} setItems={setItems} />
         </Box>
 
         {/* main content */}
