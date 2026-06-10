@@ -11,9 +11,14 @@ type SideBarPropType = {
 
 const SideBar = ({ items, setItems }: SideBarPropType) => {
   return (
-    <Flex direction="column" gap={10}>
+    <Flex
+      direction="column"
+      gap={{ base: 4, md: 6, lg: 8 }}
+      h="full"
+      overflowY="auto"
+    >
       <AddData items={items} setItems={setItems} />
-      <AddedData items={items} />
+      <AddedData items={items} setItems={setItems} />
     </Flex>
   );
 };
