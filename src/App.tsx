@@ -2,42 +2,62 @@ import { Flex, Box } from "@chakra-ui/react";
 import Main from "./components/layout/Main";
 import NavBar from "./components/layout/NavBar";
 import SideBar from "./components/layout/SideBar";
+import { useState, useEffect } from "react";
 
 export type ItemDataType = {
+  id: string;
   label: string;
-  value: string;
+  value: number;
 };
 
-const items: ItemDataType[] = [
-  { label: "React", value: "80" },
-  { label: "Node", value: "77" },
-  { label: "Python", value: "55" },
-  { label: "Java", value: "68" },
-  { label: "C++", value: "49" },
-];
-
 function App() {
-  return (
-    <Flex direction="column" h="100vh" overflow="hidden">
-      <NavBar />
+  const STORAGE_KEY = "bar_chart_items_v1";
 
+  const [items, setItems] = useState<ItemDataType[]>(() => {
+    const data = localStorage.getItem(STORAGE_KEY);
+    if (data) {
+      const parsedData: ItemDataType[] = JSON.parse(data);
+      if (Array.isArray(parsedData)) return parsedData;
+    }
+  });
+
+  // persist data into localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+  }, [items]);
+
+  return (
+    <Flex direction="column" h="100dvh" overflow="hidden">
+      {/* Fixed Navbar */}
+      <Box flexShrink={0}>
+        <NavBar />
+      </Box>
+
+      {/* Body */}
       <Flex
         flex="1"
         direction={{ base: "column", md: "row" }}
         overflow="hidden"
       >
-        {/* sidebar */}
+        {/* Sidebar - Scrollable */}
         <Box
-          w={{ base: "100%", md: "450px" }}
+          w={{ base: "100%", md: "280px", lg: "320px" }}
           borderRight={{ md: "1px solid" }}
+          borderBottom={{ base: "1px solid", md: "none" }}
+          p={{ base: 3, md: 4, lg: 5 }}
           overflowY="auto"
-          p={5}
+          flexShrink={0}
         >
-          <SideBar items={items} />
+          <SideBar items={items} setItems={setItems} />
         </Box>
 
-        {/* main content */}
-        <Box flex="1" overflowY="auto" p={5}>
+        {/* Main Chart Area - Fixed */}
+        <Box
+          flex="1"
+          p={{ base: 3, md: 4, lg: 6 }}
+          overflow="hidden"
+          display="flex"
+        >
           <Main items={items} />
         </Box>
       </Flex>
