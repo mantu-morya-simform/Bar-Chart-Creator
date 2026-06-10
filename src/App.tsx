@@ -19,6 +19,8 @@ function App() {
       const parsedData: ItemDataType[] = JSON.parse(data);
       if (Array.isArray(parsedData)) return parsedData;
     }
+
+    return [];
   });
 
   // persist data into localStorage whenever they change
