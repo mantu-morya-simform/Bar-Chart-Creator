@@ -13,7 +13,7 @@ const AddedData = ({
     const newLabel = prompt("Edit label:", item.label);
     if (newLabel === null) return; // user cancelled
 
-    const newValue = prompt("Edit value:", item.value);
+    const newValue = prompt("Edit value:", String(item.value));
     if (newValue === null) return;
 
     if (!newLabel || !newValue) {
@@ -36,8 +36,10 @@ const AddedData = ({
     }
 
     setItems((prev) =>
-      prev.map((it) =>
-        it.id === item.id ? { ...it, label: newLabel, value: newValue } : it,
+      prev.map((PrevItem) =>
+        PrevItem.id === item.id
+          ? { ...PrevItem, label: newLabel, value: Number(newValue) }
+          : PrevItem,
       ),
     );
   }

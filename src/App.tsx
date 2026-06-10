@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 export type ItemDataType = {
   id: string;
   label: string;
-  value: string;
+  value: number;
 };
 
 function App() {

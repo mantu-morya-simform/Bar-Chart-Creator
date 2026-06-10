@@ -13,9 +13,9 @@ const AddData = ({ items, setItems }: SideBarPropType) => {
 
   function handleSubmitClick() {
     const label = labelRef.current?.value;
-    const value = valueRef.current?.value;
+    const value = Number(valueRef.current?.value);
 
-    if (Number(value) < 1) {
+    if (value < 1) {
       alert("Please Provide value grater then 1");
       return;
     }
@@ -25,7 +25,9 @@ const AddData = ({ items, setItems }: SideBarPropType) => {
       return;
     }
 
-    const exists = items.some((item) => item.label === label);
+    const exists = items.some(
+      (item) => item.label.toLocaleLowerCase() === label.toLocaleLowerCase(),
+    );
     if (exists) {
       alert("Duplicate label not allowed");
       return;
